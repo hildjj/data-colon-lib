@@ -1,0 +1,36 @@
+{
+  "name": "data-colon-lib",
+  "version": "0.0.0",
+  "description": "Create and parse data URIs",
+  "main": "lib/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "peggy --plugin ts-pegjs -c .peggy.json src/grammar.peggy -o src/grammar.ts && tsc",
+    "lint": "eslint . --ext ts",
+    "test": "nyc ava"
+  },
+  "keywords": [
+    "rfc2397",
+    "2396",
+    "datacolon",
+    "data",
+    "parser",
+    "mime"
+  ],
+  "author": "Joe Hildebrand <joe-github@cursive.net>",
+  "license": "MIT",
+  "devDependencies": {
+    "@cto.af/eslint-config": "1.0.3",
+    "@types/node": "18.11.18",
+    "@typescript-eslint/eslint-plugin": "5.49.0",
+    "@typescript-eslint/parser": "5.49.0",
+    "ava": "5.1.1",
+    "eslint": "8.33.0",
+    "eslint-plugin-node": "11.1.0",
+    "nyc": "15.1.0",
+    "peggy": "2.0.1",
+    "ts-node": "10.9.1",
+    "ts-pegjs": "3.0.0",
+    "typescript": "4.9.4"
+  }
+}
