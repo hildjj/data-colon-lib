@@ -1,26 +1,24 @@
-{{
-import type {DataURL} from './types'
-}}
-dataurl
+dataurl // rfc2397
   = "data:" mediatype:mediatype? b64:";base64"? "," data:data {
     return {
-      mediatype: mediatype ?? {
-        type: null,
-        subtype: null,
-        parameters: [],
-      },
+      mediatype,
       base64: Boolean(b64),
       data
-    } as DataURL
+    }
   }
 
-mediatype
-  = ts:(type:type "/" subtype:subtype)? parameters:( ";" @parameter )* {
+mediatype // rfc2397
+  = ts:(@type "/" @subtype)? parameters:parameters {
     return {
-      type: ts?.type,
-      subtype: ts?.subtype,
+      type: ts?.[0],
+      subtype: ts?.[1],
       parameters
     }
+  }
+
+parameters // Derived from rfc2397
+  = parms:( ";" @parameter )* {
+    return Object.fromEntries(parms)
   }
 
 type // rfc2045
@@ -66,7 +64,7 @@ data // rfc2397, errata 2045
   = u:uric* { return u.join('') } // Can't use $ because of escaped
 
 parameter // rfc2045
-  = attribute "=" value
+  = @attribute "=" @value
 
 attribute // rfc2045
   = token
