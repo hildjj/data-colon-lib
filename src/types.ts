@@ -1,5 +1,7 @@
 import { parse } from './grammar.js'
 
+export const SOURCE = 'dataURL source'
+
 export interface MediaType {
   type?: string;
   subtype?: string;
@@ -7,10 +9,27 @@ export interface MediaType {
 }
 
 export interface DataParts {
+  data: string;
+  base64: boolean;
+  mediatype?: MediaType;
+}
+
+export type StringEncoding = 'base64' | 'percent' | 'utf8'
+
+export interface DataOptions {
+  /**
+   * Media type.  Defaults to 'text/plain;charset=US-ASCII' per RFC 2397.
+   */
   mediatype?: MediaType | string;
+  /**
+   * Output formatting, defaults to false.
+   */
   base64?: boolean;
-  // If string, it is either base64 ot %-encoded.
-  data: Buffer | string;
+
+  /**
+   * Input encoding, if data is string.  Defaults to 'utf8'.
+   */
+  encoding?: StringEncoding;
 }
 
 //If <mediatype> is omitted, it defaults to text/plain;charset=US-ASCII.
@@ -46,24 +65,30 @@ export class DataURL {
 
   private mediatype: MediaType
 
-  public constructor(input: DataParts) {
-    this.base64 = Boolean(input.base64)
-    this.data = DataURL._toBuffer(input.data, this.base64)
-    this.mediatype = (typeof input.mediatype === 'string') ?
-      DataURL._parseMediaType(input.mediatype) :
-      input.mediatype ?? DEFAULT_MEDIA
+  public constructor(data: Buffer | string = '', opts: DataOptions = {}) {
+    this.base64 = Boolean(opts?.base64)
+    this.data = DataURL._toBuffer(data, opts.encoding)
+    this.mediatype = (typeof opts.mediatype === 'string') ?
+      DataURL._parseMediaType(opts.mediatype) :
+      opts.mediatype ?? DEFAULT_MEDIA
   }
 
   private static _parseMediaType(mt: string): MediaType {
     if (mt.length === 0) {
       return DEFAULT_MEDIA
     }
-    return parse(mt, { startRule: 'mediatype' })
+    return parse(mt, {
+      startRule: 'mediatype',
+      grammarSource: SOURCE,
+    })
   }
 
-  private static _toBuffer(data: Buffer | string, base64: boolean): Buffer {
+  private static _toBuffer(data: Buffer | string, encoding: StringEncoding): Buffer {
     if (typeof data === 'string') {
-      if (base64) {
+      if (!encoding || encoding === 'utf8') {
+        return Buffer.from(data)
+      }
+      if (encoding === 'base64') {
         return Buffer.from(data, 'base64')
       }
       const unescaped = data.replace(/%([0-9a-f]{2})/gi, (_, hex) => {
@@ -71,6 +96,7 @@ export class DataURL {
       })
       return Buffer.from(unescaped, 'ascii')
     }
+    // Ignore encoding
     return data
   }
 

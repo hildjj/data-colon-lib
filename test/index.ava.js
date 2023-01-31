@@ -1,6 +1,6 @@
 import test from 'ava'
 import fs from 'fs/promises'
-import {dataURL} from '../lib/index.js'
+import {dataURL, SOURCE} from '../lib/index.js'
 import url from 'url'
 import path from 'path'
 
@@ -13,5 +13,15 @@ test('examples', async t => {
     if (ex) {
       t.truthy(dataURL(ex), ex)
     }
+  }
+})
+
+
+test('error', t => {
+  const inp = 'data:'
+  try {
+    dataURL(inp)
+  } catch (ex) {
+    t.snapshot(ex.format([{source: SOURCE, text: inp}]))
   }
 })

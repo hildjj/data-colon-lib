@@ -1,0 +1,24 @@
+// No comma
+data:
+// No comma
+data:test
+// No parameter
+data:;,test
+// No comma
+data:;base64
+// No comma
+data:text/plain;charset=thing;base64;test
+// No value for charset
+data:;charset=,test
+// This has a # in the middle of it
+data:application/vnd.mozilla.xul+xml,%3C?xml%20version=%221.0%22?%3E%3Cwindow%20xmlns=%22http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul%22%3E%3C?xml-stylesheet%20href=%22data:text/css,#a%7B-moz-box-flex:1;%7D%22?%3E%3Cbox%20id=%22a%22%3E%3Clabel%20value=%22This%20works%21%22/%3E%3C/box%3E%3Cbox/%3E%3C/window%3E
+// Spaces not allowed
+data:,foo bar
+// No comma
+data:/../
+data:/example.com/
+data:example.com/
+data:text/html,test#test
+data:test# »
+// < not valid uric
+data:text/html;charset=utf-8,<html></html>
