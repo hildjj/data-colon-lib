@@ -1,8 +1,0 @@
-.eslintrc.cjs
-.nyc_output/
-.peggy.json
-ava.config.js
-coverage/
-src/
-test/
-tsconfig.json
