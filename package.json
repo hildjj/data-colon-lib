@@ -12,13 +12,16 @@
     "pretest": "npm run build -- --sourcemap inline",
     "test": "c8 ava",
     "posttest": "tsup --silent",
-    "clean": "rimraf lib coverage src/grammar.js src/grammar.d.ts"
+    "docs": "typedoc",
+    "clean": "rimraf docs lib coverage src/grammar.js src/grammar.d.ts"
   },
   "keywords": [
     "rfc2397",
-    "2396",
+    "rfc2396",
     "datacolon",
     "data",
+    "uri",
+    "url",
     "parser",
     "mime"
   ],
@@ -45,6 +48,7 @@
     "rimraf": "6.0.1",
     "ts-node": "10.9.2",
     "tsup": "8.4.0",
+    "typedoc": "0.27.9",
     "typescript": "5.8.2",
     "typescript-eslint": "8.26.0"
   },

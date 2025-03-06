@@ -1,17 +1,17 @@
 import {SOURCE, dataURL} from '../lib/index.js';
 import fs from 'node:fs/promises';
-import path from 'node:path';
 import test from 'ava';
-import url from 'node:url';
-
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 test('examples', async t => {
-  const examples = await fs.readFile(path.join(__dirname, 'examples.txt'), 'utf8');
+  const examples = await fs.readFile(
+    new URL('examples.txt', import.meta.url),
+    'utf8'
+  );
+  let line = 0;
   for (const ex of examples.split('\n')) {
+    line++;
     if (ex) {
-      t.truthy(dataURL(ex), ex);
+      t.truthy(dataURL(ex), `Line ${line}: ${ex}`);
     }
   }
 });

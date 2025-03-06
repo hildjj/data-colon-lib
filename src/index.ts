@@ -1,6 +1,12 @@
 import {DataURL, SOURCE} from './types.js';
 import {parse} from './grammar.js';
-export {DataURL, SOURCE} from './types.js';
+export {
+  DataURL,
+  type DataOptions,
+  type MediaType,
+  SOURCE,
+  type StringEncoding,
+} from './types.js';
 
 /**
  * Parse the given data: URL.

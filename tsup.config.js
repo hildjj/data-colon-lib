@@ -7,6 +7,7 @@ export default defineConfig({
     'src/index.ts',
     'src/grammar.js',
     'src/types.ts',
+    'src/utils.ts',
   ],
   format: 'esm',
   minify: true,
