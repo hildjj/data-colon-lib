@@ -15,9 +15,11 @@ Full [API documentation](http://hildjj.github.io/data-colon-lib/) is available.
 Example:
 
 ```js
-import {dataURL} from 'data-colon-lib';
+import {DataURL} from 'data-colon-lib';
 
-const parsed = dataURL('data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==');
+const parsed = DataURL.parse(
+  'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=='
+);
 // DataURL {
 //   base64: true,
 //   data: Uint8Array(13) [
@@ -25,6 +27,13 @@ const parsed = dataURL('data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==');
 //   ],
 //   mediatype: { type: 'text', subtype: 'plain', parameters: {} }
 // }
+const created = new DataURL(new Uint8Array([72, 101]), 'image/gif');
+created.toString(); // 'data:image/gif,He'
+const created64 = new DataURL(new Uint8Array([72, 101]), {
+  mediaType: 'image/gif',
+  base64: true,
+});
+created64.toString(); // 'data:image/gif;base64,SGU='
 ```
 
 ---

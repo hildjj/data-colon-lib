@@ -9,7 +9,7 @@ export interface MediaType {
 export interface DataParts {
   data: string;
   base64: boolean;
-  mediatype?: MediaType;
+  mediaType?: MediaType;
 }
 
 export type StringEncoding = 'base64' | 'percent' | 'utf8';
@@ -18,7 +18,7 @@ export interface DataOptions {
   /**
    * Media type.  Defaults to 'text/plain;charset=US-ASCII' per RFC 2397.
    */
-  mediatype?: MediaType | string;
+  mediaType?: MediaType | string;
 
   /**
    * Output formatting, defaults to false.

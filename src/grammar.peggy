@@ -1,7 +1,7 @@
 dataurl // rfc2397
-  = "data:" mediatype:mediatype? b64:";base64"? "," data:data {
+  = "data:" mediaType:mediatype? b64:";base64"? "," data:data {
     return {
-      mediatype,
+      mediaType,
       base64: Boolean(b64),
       data
     }

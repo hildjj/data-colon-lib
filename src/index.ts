@@ -5,7 +5,7 @@ import {
   uint8ArrayToBase64,
 } from 'uint8array-extras';
 import {asciiToUint8Array} from './utils.js';
-import {parse} from './grammar.js';
+import {parse as grammarParse} from './grammar.js';
 
 export type {DataOptions, MediaType, StringEncoding} from './types.js';
 
@@ -38,31 +38,43 @@ for (const c of '0123456789-_.!~*\'();/?:@&=+$,') {
 
 export class DataURL {
   public data: Uint8Array;
-  public mediatype: MediaType;
   public base64: boolean;
+  #mediatype: MediaType;
 
   public constructor(data: Uint8Array | string = '', opts: string | DataOptions = {}) {
     if (typeof opts === 'string') {
       opts = {
-        mediatype: opts,
+        mediaType: opts,
       };
     }
     this.base64 = Boolean(opts.base64);
     this.data = DataURL._toBuffer(data, opts.encoding);
-    this.mediatype = (typeof opts.mediatype === 'string') ?
-      DataURL._parseMediaType(opts.mediatype) :
-      opts.mediatype ?? DEFAULT_MEDIA;
+    this.mediaType = opts.mediaType;
   }
 
-  public static create(text: string): DataURL {
+  public set mediaType(s: string | MediaType | null | undefined) {
+    this.#mediatype = (typeof s === 'string') ?
+      DataURL._parseMediaType(s) :
+      (s ?? DEFAULT_MEDIA);
+    if (!this.#mediatype.type) {
+      this.#mediatype.type = DEFAULT_MEDIA.type;
+      this.#mediatype.subtype = DEFAULT_MEDIA.subtype;
+    }
+  }
+
+  public get mediaType(): MediaType {
+    return this.#mediatype;
+  }
+
+  public static parse(text: string): DataURL {
     try {
-      const parsed = parse(text, {
+      const parsed = grammarParse(text, {
         startRule: 'dataurl',
         grammarSource: SOURCE,
       });
       return new DataURL(parsed.data, {
         encoding: parsed.base64 ? 'base64' : 'percent',
-        mediatype: parsed.mediatype,
+        mediaType: parsed.mediaType,
         base64: parsed.base64,
       });
     } catch (e) {
@@ -77,7 +89,7 @@ export class DataURL {
     if (mt.length === 0) {
       return DEFAULT_MEDIA;
     }
-    return parse(mt, {
+    return grammarParse(mt, {
       startRule: 'mediatype',
       grammarSource: SOURCE,
     });
@@ -108,9 +120,9 @@ export class DataURL {
   }
 
   public mediaTypeString(): string {
-    let ret = `${this.mediatype.type}/${this.mediatype.subtype}`;
-    if (this.mediatype.parameters) {
-      for (const [k, v] of Object.entries(this.mediatype.parameters)) {
+    let ret = `${this.#mediatype.type}/${this.#mediatype.subtype}`;
+    if (this.#mediatype.parameters) {
+      for (const [k, v] of Object.entries(this.#mediatype.parameters)) {
         ret += `;${k}=${v}`;
       }
     }
@@ -145,5 +157,5 @@ export class DataURL {
  * @returns Parsed results.
  */
 export function dataURL(text: string): DataURL {
-  return DataURL.create(text);
+  return DataURL.parse(text);
 }

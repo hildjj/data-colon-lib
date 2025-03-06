@@ -38,12 +38,19 @@ test('create', () => {
   assert.equal(d.toString(), 'data:text/plain;charset=US-ASCII,');
   d = new DataURL('foo');
   assert.equal(d.toString(), 'data:text/plain;charset=US-ASCII,foo');
-  d = new DataURL('foo', {mediatype: ''});
+  d = new DataURL('foo', {mediaType: ''});
   assert.equal(d.toString(), 'data:text/plain;charset=US-ASCII,foo');
-  d = new DataURL('foo%ff', {encoding: 'percent', mediatype: 'text/plain;k=v'});
+  d = new DataURL('foo%ff', {encoding: 'percent', mediaType: 'text/plain;k=v'});
   assert.equal(d.toString(), 'data:text/plain;k=v,foo%ff');
-  d = new DataURL(asciiToUint8Array('foo\xff'), {base64: true, mediatype: 'text/plain'});
+  d = new DataURL(asciiToUint8Array('foo\xff'), {base64: true, mediaType: 'text/plain'});
   assert.equal(d.toString(), 'data:text/plain;base64,Zm9v/w==');
   d = new DataURL('foo', '');
   assert.equal(d.toString(), 'data:text/plain;charset=US-ASCII,foo');
+  d.mediaType = 'image/gif';
+  assert.equal(d.toString(), 'data:image/gif,foo');
+  assert.deepEqual(d.mediaType, {
+    type: 'image',
+    subtype: 'gif',
+    parameters: {},
+  });
 });
