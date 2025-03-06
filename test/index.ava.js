@@ -1,27 +1,26 @@
-import test from 'ava'
-import fs from 'fs/promises'
-import {dataURL, SOURCE} from '../lib/index.js'
-import url from 'url'
-import path from 'path'
+import {SOURCE, dataURL} from '../lib/index.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import test from 'ava';
+import url from 'node:url';
 
-const __filename = url.fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 test('examples', async t => {
-  const examples = await fs.readFile(path.join(__dirname, 'examples.txt'), 'utf8')
+  const examples = await fs.readFile(path.join(__dirname, 'examples.txt'), 'utf8');
   for (const ex of examples.split('\n')) {
     if (ex) {
-      t.truthy(dataURL(ex), ex)
+      t.truthy(dataURL(ex), ex);
     }
   }
-})
-
+});
 
 test('error', t => {
-  const inp = 'data:'
+  const inp = 'data:';
   try {
-    dataURL(inp)
+    dataURL(inp);
   } catch (ex) {
-    t.snapshot(ex.format([{source: SOURCE, text: inp}]))
+    t.snapshot(ex.format([{source: SOURCE, text: inp}]));
   }
-})
+});
