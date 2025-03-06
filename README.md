@@ -38,4 +38,4 @@ created64.toString(); // 'data:image/gif;base64,SGU='
 
 ---
 [![Build Status](https://github.com/hildjj/data-colon-lib/workflows/Tests/badge.svg)](https://github.com/hildjj/data-colon-lib/actions?query=workflow%3ATests)
-[![codecov](https://codecov.io/gh/hildjj/data-colon-lib/branch/main/graph/badge.svg?token=N7B7YLIDM4)](https://codecov.io/gh/hildjj/data-colon-lib)
+[![codecov](https://codecov.io/gh/hildjj/data-colon-lib/graph/badge.svg?token=WLAP7U9RVP)](https://codecov.io/gh/hildjj/data-colon-lib)
