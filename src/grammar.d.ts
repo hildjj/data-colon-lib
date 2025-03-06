@@ -201,14 +201,14 @@ export declare const parse: typeof ParseFunction;
 declare function ParseFunction<Options extends ParseOptions<"dataurl">>(
   input: string,
   options?: Options,
-): DataParts;
+): import("./types.js").DataParts;
 
 declare function ParseFunction<Options extends ParseOptions<"mediatype">>(
   input: string,
   options?: Options,
-): MediaType;
+): import("./types.js").MediaType;
 
 declare function ParseFunction<Options extends ParseOptions<StartRuleNames>>(
   input: string,
   options?: Options,
-): DataParts | MediaType;
+): import("./types.js").DataParts | import("./types.js").MediaType;

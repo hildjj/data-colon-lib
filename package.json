@@ -9,7 +9,7 @@
     "prebuild": "npm run parser",
     "build": "tsup",
     "lint": "eslint .",
-    "pretest": "npm run build -- --sourcemap inline",
+    "pretest": "npm run build -- --sourcemap inline --no-minify --no-dts",
     "test": "c8 ava",
     "posttest": "tsup --silent",
     "docs": "typedoc",

@@ -8,7 +8,7 @@ export default {
     'mediatype',
   ],
   returnTypes: {
-    dataurl: 'DataParts',
-    mediatype: 'MediaType',
+    dataurl: 'import("./types.js").DataParts',
+    mediatype: 'import("./types.js").MediaType',
   },
 };

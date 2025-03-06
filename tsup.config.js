@@ -6,7 +6,6 @@ export default defineConfig({
   entry: [
     'src/index.ts',
     'src/grammar.js',
-    'src/types.ts',
     'src/utils.ts',
   ],
   format: 'esm',
