@@ -5,12 +5,14 @@
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
-    "build": "peggy --format es --allowed-start-rules dataurl,mediatype src/grammar.peggy -o src/grammar.js && tsc",
-    "map": "peggy -m inline --format es --allowed-start-rules dataurl,mediatype src/grammar.peggy -o src/grammar.js && tsc --sourceMap",
+    "parser": "peggy -c peggy.config.js ",
+    "prebuild": "npm run parser",
+    "build": "tsup",
     "lint": "eslint .",
-    "test": "c8 -r lcov ava",
-    "clean": "rimraf lib coverage src/grammar.js",
-    "watch": "swc -s inline -d lib src -w"
+    "pretest": "npm run build -- --sourcemap inline",
+    "test": "c8 ava",
+    "posttest": "tsup --silent",
+    "clean": "rimraf lib coverage src/grammar.js src/grammar.d.ts"
   },
   "keywords": [
     "rfc2397",
@@ -25,10 +27,11 @@
   "files": [
     "lib/"
   ],
+  "dependencies": {
+    "uint8array-extras": "1.4.0"
+  },
   "devDependencies": {
     "@cto.af/eslint-config": "5.1.13",
-    "@swc/cli": "0.6.0",
-    "@swc/core": "1.11.7",
     "@types/node": "22.13.9",
     "@typescript-eslint/eslint-plugin": "8.26.0",
     "@typescript-eslint/parser": "8.26.0",
@@ -41,11 +44,17 @@
     "peggy": "github:peggyjs/peggy",
     "rimraf": "6.0.1",
     "ts-node": "10.9.2",
+    "tsup": "8.4.0",
     "typescript": "5.8.2",
     "typescript-eslint": "8.26.0"
   },
   "packageManager": "pnpm@10.6.0",
   "engines": {
     "node": ">=18"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

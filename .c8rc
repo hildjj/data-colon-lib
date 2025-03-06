@@ -1,0 +1,13 @@
+{
+  "reporter": [
+    "text",
+    "lcov"
+  ],
+  "exclude": [
+    "ava.config.js",
+    "**/test/**",
+    "**/tools/**",
+    "**/node_modules/**",
+    ".hostlocal.js"
+  ]
+}
