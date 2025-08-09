@@ -22,3 +22,17 @@ data:text/html,test#test
 data:test# »
 // < not valid uric
 data:text/html;charset=utf-8,<html></html>
+dat:
+foo:
+data
+datafoo
+data:text/@,
+data:foo/plain,
+data:@/foo
+data:message/x-@,
+data:message/external-body;access-type=URL;URL*A=foo,
+data:text/plain;foo,
+data:text/plain;foo*='@'bar,
+// Ironic that this is wrong, it's from 2397.  See errata #2009.
+data:text/plain;charset=iso-8859-7,%be%fg%be
+data:text/plain,%kk
