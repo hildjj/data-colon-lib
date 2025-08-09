@@ -4,7 +4,7 @@ import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import test from 'node:test';
 
-test('examples', async() => {
+test('examples', async () => {
   const examples = await fs.readFile(
     new URL('examples.txt', import.meta.url),
     'utf8'

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-conversion */
 import type {DataOptions, MediaType, StringEncoding} from './types.js';
 import {
   base64ToUint8Array,
